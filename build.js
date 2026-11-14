@@ -23,7 +23,11 @@ function write(rel, html) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, html);
 }
-const page = (p) => write(path.join(p.path, 'index.html'), layout(p));
+const allPages = {};
+const page = (p) => {
+  allPages[p.path] = { title: p.title, body: p.body, active: p.active || '' };
+  write(path.join(p.path, 'index.html'), layout(p));
+};
 
 /* ---------- validate content ---------- */
 const slugs = new Set();
@@ -458,6 +462,10 @@ ${demo ? '<p><strong>All codes, rewards, games and dates currently on this site 
 <p>We never ask for Roblox passwords or account details. Treat any request for them as a scam.</p>`);
 
 /* ---------- 404 + sitemap ---------- */
+allPages['404'] = { title: 'Page not found', active: '', body: `<section class="section"><div class="wrap narrow"><div class="empty">
+  <h1>Page not found</h1><p>The page may have moved or the address may be mistyped.</p>
+  <p class="empty-actions"><a class="btn btn-primary" href="./codes/">Browse Roblox Codes</a> <a class="btn btn-outline" href="./">Go home</a></p>
+</div></div></section>` };
 write(
   '404.html',
   layout({
@@ -478,5 +486,37 @@ write(
     .map((u) => `  <url><loc>${site.url.replace(/\/$/, '')}/${u}</loc></url>`)
     .join('\n')}\n</urlset>\n`
 );
+
+/* ---------- single-file version: BloxBeacon.html ----------
+ * One self-contained file (pages, styles, scripts, images and fonts embedded)
+ * that works when opened directly from a phone or computer, with no server. */
+{
+  const b64 = (file) => fs.readFileSync(file).toString('base64');
+  const json = (v) => JSON.stringify(v).replace(/</g, '\\u003c');
+  const images = {};
+  for (const item of [...codes, ...scripts]) images[item.slug] = 'data:image/svg+xml;base64,' + Buffer.from(thumbnail(item)).toString('base64');
+  const css = fs
+    .readFileSync(path.join(__dirname, 'src/assets/styles.css'), 'utf8')
+    .replace(/url\("fonts\/([^"]+)"\)/g, (m, f) => `url("data:font/woff2;base64,${b64(path.join(__dirname, 'src/assets/fonts', f))}")`);
+  const data = {
+    pages: allPages,
+    images,
+    index: JSON.parse(fs.readFileSync(path.join(OUT, 'assets/search-index.json'), 'utf8')),
+    siteTitle: `${site.name} – Roblox Codes & Scripts`,
+    siteName: site.name,
+  };
+  const html = layout({ path: '', title: site.name, description: site.description, body: '' })
+    .replace(/<link rel="canonical"[^>]*>\n/, '')
+    .replace(/<link rel="preload"[^>]*>\n/, '')
+    .replace(/<link rel="icon"[^>]*>/, `<link rel="icon" href="data:image/svg+xml;base64,${b64(path.join(OUT, 'assets/favicon.svg'))}">`)
+    .replace(/<link rel="stylesheet"[^>]*>/, () => `<style>${css}</style>`)
+    .replace(/<script src[^>]*><\/script>\n/, '')
+    .replace('</body>', () => `<script>window.BB_SINGLE=${json(data)};</script>
+<script>${fs.readFileSync(path.join(__dirname, 'src/assets/app.js'), 'utf8')}</script>
+<script>${fs.readFileSync(path.join(__dirname, 'src/single.js'), 'utf8')}</script>
+</body>`);
+  fs.writeFileSync(path.join(__dirname, 'BloxBeacon.html'), html);
+  console.log(`Single file -> BloxBeacon.html (${Math.round(html.length / 1024)} KB)`);
+}
 
 console.log(`Built ${urls.length + 2} pages (${codes.length} code guides, ${scripts.length} script guides) -> docs/`);

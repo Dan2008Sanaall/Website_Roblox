@@ -1,7 +1,15 @@
 /* BloxBeacon front-end behaviour: menu, search, listing filters, copy buttons. */
 (function () {
   'use strict';
-  var root = document.documentElement.getAttribute('data-root') || './';
+  // S is only set in the single-file build (BloxBeacon.html), where every page,
+  // image and the search index are embedded and links use #/ addresses.
+  var S = window.BB_SINGLE || null;
+  var root = function () { return S ? '#/' : document.documentElement.getAttribute('data-root') || './'; };
+  var imgSrc = function (rel) { return S ? S.images[rel.replace(/^img\/|\.svg$/g, '')] : root() + rel; };
+  var getQuery = function () {
+    var qs = S ? (location.hash.split('?')[1] || '') : location.search;
+    return (new URLSearchParams(qs).get('q') || '').trim();
+  };
   var $ = function (sel, el) { return (el || document).querySelector(sel); };
   var $$ = function (sel, el) { return Array.prototype.slice.call((el || document).querySelectorAll(sel)); };
   var escapeHtml = function (s) {
@@ -61,8 +69,9 @@
   /* ---------- site search (index is loaded only when needed) ---------- */
   var indexPromise;
   function loadIndex() {
+    if (S) return Promise.resolve(S.index);
     if (!indexPromise) {
-      indexPromise = fetch(root + 'assets/search-index.json')
+      indexPromise = fetch(root() + 'assets/search-index.json')
         .then(function (r) { if (!r.ok) throw new Error('index'); return r.json(); })
         .catch(function () { indexPromise = null; return []; });
     }
@@ -103,16 +112,17 @@
       var found = searchIndex(items, q).slice(0, 5);
       suggestList.innerHTML = found.length
         ? found.map(function (i) {
-            return '<li><a href="' + root + i.url + '">' + kindTag(i) + '<span>' + escapeHtml(i.title) + '</span></a></li>';
+            return '<li><a href="' + root() + i.url + '">' + kindTag(i) + '<span>' + escapeHtml(i.title) + '</span></a></li>';
           }).join('')
         : '<li class="none">No results found. Press Search to see other options.</li>';
       suggestList.hidden = false;
     });
   });
 
+  function initPage() {
   var searchPage = $('[data-search-page]');
   if (searchPage) {
-    var q = (new URLSearchParams(location.search).get('q') || '').trim();
+    var q = getQuery();
     var input = $('input', searchPage);
     var countEl = $('[data-search-count]');
     var resultsEl = $('[data-search-results]');
@@ -126,9 +136,9 @@
           ? 'Type a game name or topic to search.'
           : found.length ? found.length + (found.length === 1 ? ' result' : ' results') + ' for “' + query + '”' : '';
         resultsEl.innerHTML = found.map(function (i) {
-          return '<li class="result"><img src="' + root + i.img + '" alt="" width="640" height="360" loading="lazy">' +
+          return '<li class="result"><img src="' + imgSrc(i.img) + '" alt="" width="640" height="360" loading="lazy">' +
             '<div>' + kindTag(i) + ' <span class="tag tag-plain">' + escapeHtml(i.tag) + '</span>' +
-            '<h2><a href="' + root + i.url + '">' + escapeHtml(i.title) + '</a></h2>' +
+            '<h2><a href="' + root() + i.url + '">' + escapeHtml(i.title) + '</a></h2>' +
             '<p>' + escapeHtml(i.desc) + '</p></div></li>';
         }).join('');
       });
@@ -137,7 +147,8 @@
     run(q);
     input.addEventListener('input', function () {
       var v = input.value.trim();
-      history.replaceState(null, '', v ? '?q=' + encodeURIComponent(v) : location.pathname);
+      var qs = v ? '?q=' + encodeURIComponent(v) : '';
+      history.replaceState(null, '', S ? '#/search/' + qs : qs || location.pathname);
       run(v);
     });
   }
@@ -202,6 +213,9 @@
     });
     render();
   });
+  }
+  window.BB = { initPage: initPage, closePanels: function () { setMenu(false); setSearch(false); } };
+  if (!S) initPage();
 
   /* ---------- copy buttons ---------- */
   function copyText(text) {
