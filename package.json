@@ -1,0 +1,11 @@
+{
+  "name": "bloxbeacon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BloxBeacon – an independent Roblox codes and scripts guide site (static).",
+  "scripts": {
+    "build": "node build.js",
+    "start": "node build.js && node serve.js"
+  },
+  "engines": { "node": ">=18" }
+}

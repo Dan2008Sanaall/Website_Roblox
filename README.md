@@ -1,1 +1,63 @@
-# Website_Roblox
+# BloxBeacon
+
+*Find your next Roblox advantage.*
+
+An independent fan site for **Roblox Codes** (the main focus) and **Roblox Scripts**.
+It is a static website: no framework, no dependencies, no backend.
+
+> **Demo content.** The games are placeholders and every code, reward and date is a sample.
+> There is no CMS, database, admin dashboard or live data feed connected.
+
+## Run it
+
+```bash
+npm start          # builds the site into ./docs and serves it on http://localhost:3000
+npm run build      # build only
+```
+
+Requires Node 18 or newer.
+
+## Add or update content
+
+| What | File |
+| --- | --- |
+| Code guides (games, codes, rewards, dates) | `content/codes.js` |
+| Script guides | `content/scripts.js` |
+| Site name, tagline, public URL, contact email, demo mode | `content/site.js` |
+
+Each entry in `codes.js` / `scripts.js` becomes its own page, card and search result.
+The fields are documented at the top of each file. Run `npm run build` after editing.
+
+When real, checked content has replaced the samples, set `demoMode: false` in `content/site.js`.
+That removes the preview banner, the "Sample" chips and notices, and the `noindex` tag.
+Also set `url` to the real address (used for canonical links and `sitemap.xml`).
+
+### Moving to a CMS or database later
+
+`build.js` only needs two arrays. Replace the two `require('./content/…')` lines with code
+that fetches the same fields from a CMS or database and the rest of the site works unchanged.
+
+## Structure
+
+```
+content/          the data files above
+src/components.js layout, header, footer, cards, callouts, copy button
+src/art.js        logo and procedurally drawn thumbnails (original artwork)
+src/assets/       styles.css, app.js, fonts
+build.js          generates every page into docs/
+serve.js          local preview server
+docs/             generated output (do not edit by hand)
+```
+
+URLs: `/codes/`, `/codes/<slug>/`, `/scripts/`, `/scripts/<slug>/`, `/search/?q=…`,
+`/about/`, `/contact/`, `/privacy/`, `/disclaimer/`.
+
+## Deploy
+
+`docs/` is plain static files with relative links, so it works on any static host.
+For GitHub Pages: Settings → Pages → Deploy from branch → `main` / `/docs`.
+
+## Credits
+
+Fonts: Sora and Inter, both under the SIL Open Font License 1.1, self-hosted in `src/assets/fonts`.
+Logo and thumbnails are original. BloxBeacon is not affiliated with or endorsed by Roblox Corporation.

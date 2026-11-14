@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(204 70% 14%)"/><stop offset="1" stop-color="hsl(204 85% 34%)"/></linearGradient>
+<linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0v40" fill="none" stroke="#fff" stroke-opacity=".05"/></pattern>
+</defs>
+<rect width="640" height="360" fill="url(#g)"/>
+<rect width="640" height="360" fill="url(#p)"/>
+<rect x="286" y="221" width="31" height="31" rx="6" fill="hsl(220 90% 70%)" opacity="0.08"/>
+<rect x="480" y="144" width="85" height="85" rx="17" fill="hsl(187 90% 70%)" opacity="0.06"/>
+<rect x="369" y="19" width="67" height="67" rx="13" fill="hsl(216 90% 70%)" opacity="0.08"/>
+<rect x="119" y="113" width="88" height="88" rx="18" fill="hsl(197 90% 70%)" opacity="0.07"/>
+<rect x="137" y="232" width="34" height="34" rx="7" fill="hsl(199 90% 70%)" opacity="0.13"/>
+<rect x="394" y="9" width="58" height="58" rx="12" fill="hsl(220 90% 70%)" opacity="0.17"/>
+<rect x="581" y="269" width="37" height="37" rx="7" fill="hsl(190 90% 70%)" opacity="0.11"/>
+<rect x="610" y="-15" width="58" height="58" rx="12" fill="hsl(207 90% 70%)" opacity="0.16"/>
+<rect x="296" y="113" width="58" height="58" rx="12" fill="hsl(216 90% 70%)" opacity="0.14"/>
+<path d="M320 180 60 -40h160zM320 180 580 -40H420z" fill="url(#b)"/>
+<rect x="232" y="92" width="176" height="176" rx="40" fill="hsl(204 95% 56%)"/>
+<rect x="232" y="92" width="176" height="176" rx="40" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+<g transform="translate(270 130)" fill="#fff"><path d="M58 6L20 56h24l-6 38 42-54H54z"/></g>
+</svg>

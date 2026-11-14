@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en" data-root="../../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create a leaderstats leaderboard with Coins | BloxBeacon</title>
+<meta name="description" content="A short beginner script that shows a Coins value next to each player on the in-game leaderboard.">
+<link rel="canonical" href="https://example.com/scripts/leaderstats-leaderboard/">
+<meta name="robots" content="noindex">
+<meta property="og:site_name" content="BloxBeacon">
+<meta property="og:title" content="Create a leaderstats leaderboard with Coins | BloxBeacon">
+<meta property="og:description" content="A short beginner script that shows a Coins value next to each player on the in-game leaderboard.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#0b1634">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../assets/fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/styles.css">
+<script src="../../assets/app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="brand" href="../../" aria-label="BloxBeacon home">
+<svg class="logo-mark" width="36" height="36" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+  <rect width="48" height="48" rx="12" fill="#1f5cff"/>
+  <path d="M24 14 5 5v10zM24 14l19-9v10z" fill="#fff" opacity=".38"/>
+  <rect x="19" y="10" width="10" height="8" rx="2" fill="#fff"/>
+  <path d="M18.5 21h11l3 17h-17z" fill="#fff"/>
+  <path d="M17.6 27h12.8l.6 3.6H17z" fill="#1f5cff"/>
+  <rect x="12" y="38" width="24" height="4" rx="2" fill="#fff"/>
+</svg><span class="brand-name">Blox<span>Beacon</span></span></a>
+    <nav class="site-nav" id="site-nav" aria-label="Main"><a href="../../">Home</a><a href="../../codes/">Roblox Codes</a><a href="../../scripts/" aria-current="page">Roblox Scripts</a></nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" data-search-toggle aria-expanded="false" aria-controls="search-panel" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path class="m1" d="M4 7h16"/><path class="m2" d="M4 12h16"/><path class="m3" d="M4 17h16"/></svg></button>
+    </div>
+  </div>
+  <div class="search-panel" id="search-panel" hidden>
+    <div class="wrap">
+      <form class="search-form" action="../../search/" method="get" role="search">
+        <label class="sr-only" for="header-q">Search code and script guides</label>
+        <input id="header-q" name="q" type="search" placeholder="Search games, codes and scripts…" autocomplete="off" data-suggest>
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+      <ul class="suggestions" data-suggestions hidden></ul>
+    </div>
+  </div>
+</header>
+<p class="demo-bar"><span class="wrap"><strong>Preview build.</strong> Games, codes, rewards and dates on this site are sample content, not real or verified.</span></p>
+<main id="main">
+
+<article class="article">
+  <header class="page-hero"><div class="wrap narrow">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../scripts/">Roblox Scripts</a></li><li aria-current="page">Create a leaderstats leaderboard with Coins</li></ol></nav>
+    <p class="card-tags"><span class="tag tag-studio">Roblox Studio</span><span class="tag tag-plain">Leaderboard</span></p>
+    <h1>Create a leaderstats leaderboard with Coins</h1>
+    <p class="lead">A short beginner script that shows a Coins value next to each player on the in-game leaderboard.</p>
+    <dl class="meta">
+      <div><dt>Topic</dt><dd>Beginner basics</dd></div>
+      <div><dt>Runs in</dt><dd>For Roblox Studio development</dd></div>
+      <div><dt>Last updated</dt><dd><time datetime="2026-11-12">12 Nov 2026</time></dd></div>
+    </dl>
+  </div></header>
+  <div class="wrap narrow prose">
+    <img class="feature-img" src="../../img/leaderstats-leaderboard.svg" alt="Illustration for the guide: Create a leaderstats leaderboard with Coins" width="640" height="360" fetchpriority="high">
+    <aside class="callout callout-info"><p class="callout-title">Sample article</p><p>This is a sample tutorial included to preview the site. The script is a teaching example for Roblox Studio. Test it in your own place before relying on it.</p></aside>
+
+    <section aria-labelledby="what-h">
+      <h2 id="what-h">What this script does</h2>
+      <p>Roblox shows any values stored in a folder named leaderstats on the default player list. This script creates that folder and a Coins value whenever a player joins.</p>
+    </section>
+
+    <section aria-labelledby="req-h">
+      <h2 id="req-h">Requirements</h2>
+      <ul><li>Roblox Studio and edit access to the place.</li></ul>
+    </section>
+
+    <section aria-labelledby="code-h">
+      <h2 id="code-h">The script</h2>
+      <figure class="codeblock">
+        <figcaption><span>Script in ServerScriptService</span><button class="btn btn-copy" type="button" data-copy="local Players = game:GetService(&quot;Players&quot;)
+
+local function onPlayerAdded(player)
+	local leaderstats = Instance.new(&quot;Folder&quot;)
+	leaderstats.Name = &quot;leaderstats&quot; -- must be lower case
+	leaderstats.Parent = player
+
+	local coins = Instance.new(&quot;IntValue&quot;)
+	coins.Name = &quot;Coins&quot;
+	coins.Value = 0
+	coins.Parent = leaderstats
+end
+
+Players.PlayerAdded:Connect(onPlayerAdded)
+
+-- Handle anyone who joined before this script started running.
+for _, player in Players:GetPlayers() do
+	task.spawn(onPlayerAdded, player)
+end" aria-label="Copy script"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.500 4H15"/></svg><span data-copy-label>Copy</span></button></figcaption>
+        <pre tabindex="0" aria-label="Luau source code"><code><span class="t-k">local</span> Players = game:GetService(<span class="t-s">&quot;Players&quot;</span>)
+
+<span class="t-k">local</span> <span class="t-k">function</span> onPlayerAdded(player)
+	<span class="t-k">local</span> leaderstats = Instance.new(<span class="t-s">&quot;Folder&quot;</span>)
+	leaderstats.Name = <span class="t-s">&quot;leaderstats&quot;</span> <span class="t-c">-- must be lower case</span>
+	leaderstats.Parent = player
+
+	<span class="t-k">local</span> coins = Instance.new(<span class="t-s">&quot;IntValue&quot;</span>)
+	coins.Name = <span class="t-s">&quot;Coins&quot;</span>
+	coins.Value = <span class="t-n">0</span>
+	coins.Parent = leaderstats
+<span class="t-k">end</span>
+
+Players.PlayerAdded:Connect(onPlayerAdded)
+
+<span class="t-c">-- Handle anyone who joined before this script started running.</span>
+<span class="t-k">for</span> _, player <span class="t-k">in</span> Players:GetPlayers() <span class="t-k">do</span>
+	task.spawn(onPlayerAdded, player)
+<span class="t-k">end</span></code></pre>
+      </figure>
+    </section>
+
+    <section aria-labelledby="steps-h">
+      <h2 id="steps-h">How to use it</h2>
+      <ol class="steps"><li>Insert a Script into ServerScriptService.</li><li>Paste the code and press Play.</li><li>Open the player list in the top-right corner to see the Coins column.</li></ol>
+    </section>
+
+    <aside class="callout callout-warn"><p class="callout-title"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17.200v.1"/></svg>Before you use this</p><ul><li>This example does not save progress. Values reset when the player leaves unless you add DataStore saving.</li><li>BloxBeacon will never ask for your Roblox password or account details.</li></ul></aside>
+  </div>
+</article>
+<section class="section section-tint"><div class="wrap">
+  
+<div class="section-head">
+  <div><h2>Related tutorials</h2></div>
+  <a class="more-link" href="../../scripts/">All script guides <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+  <ul class="cards cards-3"><li class="card" data-item data-title="how to build a redeem-code system in roblox studio game systems" data-published="2026-11-09" data-updated="2026-11-14" data-cat="studio">
+  <a class="card-media" href="../../scripts/redeem-code-system/" tabindex="-1" aria-hidden="true">
+    <img src="../../img/redeem-code-system.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+    <span class="chip-demo">Sample</span>
+  </a>
+  <div class="card-body">
+    <p class="card-tags"><span class="tag tag-studio">Roblox Studio</span><span class="tag tag-plain">Reward codes</span></p>
+    <h3 class="card-title"><a href="../../scripts/redeem-code-system/">How to build a redeem-code system in Roblox Studio</a></h3>
+    
+    <p class="card-date">Updated <time datetime="2026-11-14">14 Nov 2026</time></p>
+  </div>
+</li><li class="card" data-item data-title="make a sliding door with tweenservice building &amp; animation" data-published="2026-10-27" data-updated="2026-11-08" data-cat="studio">
+  <a class="card-media" href="../../scripts/tween-sliding-door/" tabindex="-1" aria-hidden="true">
+    <img src="../../img/tween-sliding-door.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+    <span class="chip-demo">Sample</span>
+  </a>
+  <div class="card-body">
+    <p class="card-tags"><span class="tag tag-studio">Roblox Studio</span><span class="tag tag-plain">Animation</span></p>
+    <h3 class="card-title"><a href="../../scripts/tween-sliding-door/">Make a sliding door with TweenService</a></h3>
+    
+    <p class="card-date">Updated <time datetime="2026-11-08">8 Nov 2026</time></p>
+  </div>
+</li><li class="card" data-item data-title="save player coins with datastoreservice saving data" data-published="2026-10-19" data-updated="2026-11-05" data-cat="studio">
+  <a class="card-media" href="../../scripts/datastore-save-coins/" tabindex="-1" aria-hidden="true">
+    <img src="../../img/datastore-save-coins.svg" alt="" width="640" height="360" loading="lazy" decoding="async">
+    <span class="chip-demo">Sample</span>
+  </a>
+  <div class="card-body">
+    <p class="card-tags"><span class="tag tag-studio">Roblox Studio</span><span class="tag tag-plain">Data saving</span></p>
+    <h3 class="card-title"><a href="../../scripts/datastore-save-coins/">Save player Coins with DataStoreService</a></h3>
+    
+    <p class="card-date">Updated <time datetime="2026-11-05">5 Nov 2026</time></p>
+  </div>
+</li></ul>
+</div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="../../">
+<svg class="logo-mark" width="32" height="32" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+  <rect width="48" height="48" rx="12" fill="#1f5cff"/>
+  <path d="M24 14 5 5v10zM24 14l19-9v10z" fill="#fff" opacity=".38"/>
+  <rect x="19" y="10" width="10" height="8" rx="2" fill="#fff"/>
+  <path d="M18.5 21h11l3 17h-17z" fill="#fff"/>
+  <path d="M17.6 27h12.8l.6 3.6H17z" fill="#1f5cff"/>
+  <rect x="12" y="38" width="24" height="4" rx="2" fill="#fff"/>
+</svg><span class="brand-name">Blox<span>Beacon</span></span></a>
+      <p class="footer-tag">Find your next Roblox advantage.</p>
+    </div>
+    <nav aria-label="Footer"><ul class="footer-links"><li><a href="../../">Home</a></li><li><a href="../../codes/">Roblox Codes</a></li><li><a href="../../scripts/">Roblox Scripts</a></li><li><a href="../../about/">About Us</a></li><li><a href="../../contact/">Contact Us</a></li><li><a href="../../privacy/">Privacy Policy</a></li><li><a href="../../disclaimer/">Disclaimer</a></li></ul></nav>
+  </div>
+  <div class="wrap footer-note">
+    <p>BloxBeacon is an independent fan resource. It is not affiliated with, sponsored by or endorsed by Roblox Corporation. Roblox is a trademark of Roblox Corporation.</p>
+    <p>© 2026 BloxBeacon. Artwork on this site is original.</p>
+  </div>
+</footer>
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+</body>
+</html>

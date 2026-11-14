@@ -1,0 +1,9 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" class="logo-mark" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+  <rect width="48" height="48" rx="12" fill="#1f5cff"/>
+  <path d="M24 14 5 5v10zM24 14l19-9v10z" fill="#fff" opacity=".38"/>
+  <rect x="19" y="10" width="10" height="8" rx="2" fill="#fff"/>
+  <path d="M18.5 21h11l3 17h-17z" fill="#fff"/>
+  <path d="M17.6 27h12.8l.6 3.6H17z" fill="#1f5cff"/>
+  <rect x="12" y="38" width="24" height="4" rx="2" fill="#fff"/>
+</svg>
